@@ -6,7 +6,7 @@
 
 #include "ui_FloatSlider.h"
 
-class QDESIGNER_WIDGET_EXPORT FloatSlider : public QSlider, public Ui::FloatSlider
+class QDESIGNER_WIDGET_EXPORT FloatSlider : public QWidget, public Ui::FloatSlider
 {
 Q_OBJECT
 
