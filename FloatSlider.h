@@ -13,11 +13,16 @@ Q_OBJECT
 signals:
   void valueChanged(float);
 
+public slots:
+  void on_horizontalSlider_valueChanged(int);
+  
 public:
   FloatSlider(QWidget *parent = 0);
 
   float GetValue();
-
+  void SetMinValue(const float);
+  void SetMaxValue(const float);
+  
 protected:
   float MinValue;
   float MaxValue;

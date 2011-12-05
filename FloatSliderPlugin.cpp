@@ -38,35 +38,118 @@
 **
 ****************************************************************************/
 
-#ifndef CUSTOMWIDGETPLUGIN_H
-#define CUSTOMWIDGETPLUGIN_H
+#include "FloatSlider.h"
+#include "FloatSliderPlugin.h"
 
-#include <QDesignerCustomWidgetInterface>
+#include <QtPlugin>
 
 //! [0]
-class FloatSliderPlugin : public QObject, public QDesignerCustomWidgetInterface
+FloatSliderPlugin::FloatSliderPlugin(QObject *parent)
+    : QObject(parent)
 {
-    Q_OBJECT
-    Q_INTERFACES(QDesignerCustomWidgetInterface)
-
-public:
-    FloatSliderPlugin(QObject *parent = 0);
-
-    bool isContainer() const;
-    bool isInitialized() const;
-    QIcon icon() const;
-    QString domXml() const;
-    QString group() const;
-    QString includeFile() const;
-    QString name() const;
-    QString toolTip() const;
-    QString whatsThis() const;
-    QWidget *createWidget(QWidget *parent);
-    void initialize(QDesignerFormEditorInterface *core);
-
-private:
-    bool initialized;
-};
+    initialized = false;
+}
 //! [0]
 
-#endif
+//! [1]
+void FloatSliderPlugin::initialize(QDesignerFormEditorInterface * /* core */)
+{
+    if (initialized)
+        return;
+
+    initialized = true;
+}
+//! [1]
+
+//! [2]
+bool FloatSliderPlugin::isInitialized() const
+{
+    return initialized;
+}
+//! [2]
+
+//! [3]
+QWidget *FloatSliderPlugin::createWidget(QWidget *parent)
+{
+    return new FloatSlider(parent);
+}
+//! [3]
+
+//! [4]
+QString FloatSliderPlugin::name() const
+{
+    return "FloatSlider";
+}
+//! [4]
+
+//! [5]
+QString FloatSliderPlugin::group() const
+{
+    return "Display Widgets [Examples]";
+}
+//! [5]
+
+//! [6]
+QIcon FloatSliderPlugin::icon() const
+{
+    return QIcon();
+}
+//! [6]
+
+//! [7]
+QString FloatSliderPlugin::toolTip() const
+{
+    return "";
+}
+//! [7]
+
+//! [8]
+QString FloatSliderPlugin::whatsThis() const
+{
+    return "";
+}
+//! [8]
+
+//! [9]
+bool FloatSliderPlugin::isContainer() const
+{
+    return false;
+}
+//! [9]
+
+//! [10]
+QString FloatSliderPlugin::domXml() const
+{
+    return "<ui language=\"c++\">\n"
+           " <widget class=\"FloatSlider\" name=\"floatSlider\">\n"
+//! [11]
+           "  <property name=\"geometry\">\n"
+           "   <rect>\n"
+           "    <x>0</x>\n"
+           "    <y>0</y>\n"
+           "    <width>100</width>\n"
+           "    <height>100</height>\n"
+           "   </rect>\n"
+           "  </property>\n"
+//! [11]
+           "  <property name=\"toolTip\" >\n"
+           "   <string>The current time</string>\n"
+           "  </property>\n"
+           "  <property name=\"whatsThis\" >\n"
+           "   <string>The float slider widget allows the user to select a float value.</string>\n"
+           "  </property>\n"
+           " </widget>\n"
+           "</ui>\n";
+}
+//! [10]
+
+//! [12]
+QString FloatSliderPlugin::includeFile() const
+{
+    return "FloatSlider.h";
+}
+//! [12]
+
+//! [13]
+Q_EXPORT_PLUGIN2(FloatSliderPlugin, FloatSliderPlugin)
+//! [13]
